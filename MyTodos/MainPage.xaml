@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodel="clr-namespace:MyTodos.ViewModel"
-             xmlns:services="clr-namespace:MyTodos.Services"
              x:Class="MyTodos.MainPage"
-             x:DataType="viewmodel:MainViewModel">
+             xmlns:viewmodel="clr-namespace:MyTodos.ViewModel"
+             x:DataType="viewmodel:MainViewModel"
+             BackgroundColor="#F0F4F8">
 
     <Grid RowDefinitions="100,Auto, *"
           ColumnDefinitions=".75*, .25*"
@@ -13,8 +13,9 @@
           ColumnSpacing="10">
 
         <Label Text="My Todos"
-               FontSize="60"
+               FontSize="50"
                FontAttributes="Bold"
+               TextColor="#333333"
                Grid.Row="0"
                Grid.Column="0"
                Grid.ColumnSpan="2"
@@ -23,60 +24,63 @@
 
         <Entry Placeholder="Add something to do..."
                Text="{Binding Text}"
-               Grid.Row="1"
-               FontSize="15"/>
+               FontSize="18"
+               BackgroundColor="White"
+               TextColor="#333333"
+               Margin="0,0,10,0"
+               VerticalOptions="Center"
+               Grid.Row="1"/>
 
         <Button Text="Save"
                 Command="{Binding AddCommand}"
-                Background="#77DD77"
+                BackgroundColor="#4CAF50"
+                TextColor="White"
+                FontAttributes="Bold"
+                FontSize="16"
+                CornerRadius="5"
                 Grid.Row="1"
-                Grid.Column="1"/>
+                Grid.Column="1"
+                VerticalOptions="Center"/>
 
         <CollectionView 
             Grid.Row="2"
             Grid.ColumnSpan="2"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand"
-            ItemsSource="{Binding Items}">
+            ItemsSource="{Binding Items}"
+            BackgroundColor="White"
+            SelectionMode="None">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="services:TodoItem">
-                    <!-- Cambiado a services:TodoItem -->
-                    <Grid Padding="0,5" ColumnDefinitions="*,Auto">
-                        <Frame
-                            Margin="0,5"
-                            Padding="10"
-                            CornerRadius="10">
+                <DataTemplate x:DataType="{x:Type x:String}">
+                    <Frame Margin="0,5" Padding="5" CornerRadius="10" BorderColor="#E0E0E0" BackgroundColor="#FAFAFA">
+                        <Grid ColumnDefinitions="*,Auto">
                             <StackLayout Orientation="Horizontal">
                                 <CheckBox
-                                    IsChecked="{Binding IsCompleted}"  
                                     VerticalOptions="Center"
-                                    Color="#77DD77"/>
-                                <Label Text="{Binding Text}"  
+                                    Color="#4CAF50"
+                                    Margin="0,0,10,0"/>
+                                <Label Text="{Binding .}"
                                        FontSize="15"
                                        VerticalOptions="Center"
+                                       TextColor="#333333"
                                        HorizontalOptions="StartAndExpand"/>
-                                <Button Text="Editar"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=EditCommand}"
-                                        CommandParameter="{Binding .}"
-                                        VerticalOptions="Center"
-                                        BackgroundColor="Blue"
-                                        TextColor="White"
-                                        WidthRequest="80"
-                                        HeightRequest="40"/>
-                                <Button Text="Remove"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteCommand}"
-                                        CommandParameter="{Binding .}"
-                                        VerticalOptions="Center"
-                                        BackgroundColor="Red"
-                                        TextColor="White"
-                                        WidthRequest="80"
-                                        HeightRequest="40"/>
                             </StackLayout>
-                        </Frame>
-                    </Grid>
+                            <Button Text="Remove"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteCommand}"
+                                    CommandParameter="{Binding .}"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="#F44336"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    CornerRadius="5"
+                                    WidthRequest="80"
+                                    HeightRequest="35"
+                                    Grid.Column="1"/>
+                        </Grid>
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-
         </CollectionView>
 
     </Grid>
